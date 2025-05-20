@@ -173,7 +173,7 @@ def test_model_reproducibility(sample_data, preprocessor):
     ), "モデルの予測結果に再現性がありません"
 
 
-#---------------------------Day5課題--------------------------------
+# ---------------------------Day5課題--------------------------------
 def test_model_against_baseline(train_model):
     """過去モデル（ベースライン）と比較し、精度劣化がないか検証。なければ保存"""
     model, X_test, y_test = train_model
@@ -188,13 +188,11 @@ def test_model_against_baseline(train_model):
         acc_current = accuracy_score(y_test, model.predict(X_test))
         acc_baseline = accuracy_score(y_test, baseline_model.predict(X_test))
 
-        assert acc_current >= acc_baseline - 0.01, (
-            f"精度が劣化しています。現在: {acc_current:.4f}, ベースライン: {acc_baseline:.4f}"
-        )
+        assert (
+            acc_current >= acc_baseline - 0.01
+        ), f"精度が劣化しています。現在: {acc_current:.4f}, ベースライン: {acc_baseline:.4f}"
     else:
         # ベースラインモデルがなければ、今回のモデルを保存
         with open(baseline_path, "wb") as f:
             pickle.dump(model, f)
         print("初回実行のため、ベースラインモデルを保存しました。")
-
-
